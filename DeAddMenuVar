@@ -1,0 +1,9 @@
+QLabel* didl = new QLabel("Идентификатор:");
+QLineEdit* didle = new QLineEdit();
+QBoxLayout* didlo = new QBoxLayout(QBoxLayout::TopToBottom);
+
+//QLabel* didivl = new QLabel("ИН подразделения:");
+//QLineEdit* didivle = new QLineEdit();
+//QBoxLayout* didivlo = new QBoxLayout(QBoxLayout::TopToBottom);
+
+QPushButton* DeAddPB = new QPushButton("Добавить");

@@ -1,0 +1,9 @@
+QLabel* didel = new QLabel("Идентификатор:");
+QLineEdit* didele = new QLineEdit();
+QBoxLayout* didelo = new QBoxLayout(QBoxLayout::TopToBottom);
+
+QPushButton* dchoosePB = new QPushButton("Выбрать");
+QPushButton* dcancelPB = new QPushButton("Отмена");
+QBoxLayout* dpblo = new QBoxLayout(QBoxLayout::LeftToRight);
+
+QPushButton* deletePB = new QPushButton("Удалить");

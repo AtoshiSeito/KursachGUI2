@@ -1,0 +1,33 @@
+QLabel* eidel = new QLabel("Идентификатор:");
+QLineEdit* eidele = new QLineEdit();
+QBoxLayout* eidelo = new QBoxLayout(QBoxLayout::TopToBottom);
+
+QPushButton* echoosePB = new QPushButton("Выбрать");
+QPushButton* ecancelPB = new QPushButton("Отмена");
+QBoxLayout* epblo = new QBoxLayout(QBoxLayout::LeftToRight);
+
+QLabel* edidl = new QLabel("Идентификатор:");
+QLineEdit* edidle = new QLineEdit();
+QBoxLayout* edidlo = new QBoxLayout(QBoxLayout::TopToBottom);
+
+QLabel* edidol = new QLabel("Идентификатор офицера:");
+QLineEdit* edidole = new QLineEdit();
+QBoxLayout* edidolo = new QBoxLayout(QBoxLayout::TopToBottom);
+
+QLabel* esnl = new QLabel("Фамилия:");
+QLineEdit* esnle = new QLineEdit();
+QBoxLayout* esnlo = new QBoxLayout(QBoxLayout::TopToBottom);
+
+QLabel* efnl = new QLabel("Имя:");
+QLineEdit* efnle = new QLineEdit();
+QBoxLayout* efnlo = new QBoxLayout(QBoxLayout::TopToBottom);
+
+QLabel* etnl = new QLabel("Отчество:");
+QLineEdit* etnle = new QLineEdit();
+QBoxLayout* etnlo = new QBoxLayout(QBoxLayout::TopToBottom);
+
+QLabel* eidivl = new QLabel("ИН подразделения:");
+QLineEdit* eidivle = new QLineEdit();
+QBoxLayout* eidivlo = new QBoxLayout(QBoxLayout::TopToBottom);
+
+QPushButton* editPB = new QPushButton("Изменить");

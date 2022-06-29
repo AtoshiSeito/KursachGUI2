@@ -1,0 +1,21 @@
+QLabel* cidl = new QLabel("Идентификатор:");
+QLineEdit* cidle = new QLineEdit();
+QBoxLayout* cidlo = new QBoxLayout(QBoxLayout::TopToBottom);
+
+QLabel* csnl = new QLabel("Фамилия:");
+QLineEdit* csnle = new QLineEdit();
+QBoxLayout* csnlo = new QBoxLayout(QBoxLayout::TopToBottom);
+
+QLabel* cfnl = new QLabel("Имя:");
+QLineEdit* cfnle = new QLineEdit();
+QBoxLayout* cfnlo = new QBoxLayout(QBoxLayout::TopToBottom);
+
+QLabel* ctnl = new QLabel("Отчество:");
+QLineEdit* ctnle = new QLineEdit();
+QBoxLayout* ctnlo = new QBoxLayout(QBoxLayout::TopToBottom);
+
+QLabel* cidivl = new QLabel("ИН подразделения:");
+QLineEdit* cidivle = new QLineEdit();
+QBoxLayout* cidivlo = new QBoxLayout(QBoxLayout::TopToBottom);
+
+QPushButton* CaAddPB = new QPushButton("Добавить");

@@ -1,0 +1,21 @@
+QLabel* oidl = new QLabel("Идентификатор:");
+QLineEdit* oidle = new QLineEdit();
+QBoxLayout* oidlo = new QBoxLayout(QBoxLayout::TopToBottom);
+
+QLabel* osnl = new QLabel("Фамилия:");
+QLineEdit* osnle = new QLineEdit();
+QBoxLayout* osnlo = new QBoxLayout(QBoxLayout::TopToBottom);
+
+QLabel* ofnl = new QLabel("Имя:");
+QLineEdit* ofnle = new QLineEdit();
+QBoxLayout* ofnlo = new QBoxLayout(QBoxLayout::TopToBottom);
+
+QLabel* otnl = new QLabel("Отчество:");
+QLineEdit* otnle = new QLineEdit();
+QBoxLayout* otnlo = new QBoxLayout(QBoxLayout::TopToBottom);
+
+QLabel* oidivl = new QLabel("ИН подразделения:");
+QLineEdit* oidivle = new QLineEdit();
+QBoxLayout* oidivlo = new QBoxLayout(QBoxLayout::TopToBottom);
+
+QPushButton* OfAddPB = new QPushButton("Добавить");
