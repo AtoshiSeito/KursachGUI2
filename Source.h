@@ -17,5 +17,7 @@
 #include <QSqlDatabase>
 #include <QSqlQuery>
 #include <QHeaderView>
+#include <QProcess>
+#include <QDialog>
 
 #endif // SOURCE_H

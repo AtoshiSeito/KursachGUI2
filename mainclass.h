@@ -14,6 +14,13 @@ private:
 #include <DeleteMenuVar>
 #include <EditMenuVar>
 
+    QDialog* Error = new QDialog();
+    QBoxLayout* ErrorloH = new QBoxLayout(QBoxLayout::LeftToRight);
+    QBoxLayout* ErrorloV = new QBoxLayout(QBoxLayout::TopToBottom);
+
+    QProcess* console = new QProcess();
+    QString program = "C:/Qt/Projects/Kursach/debug/Kursach.exe";
+
     QWidget* mw = new QWidget();
     QStackedWidget* msl = new QStackedWidget();
     QWidget* OfAddW = new QWidget();
@@ -51,10 +58,12 @@ private:
 
     QSqlDatabase DataBase;
     QSqlQuery* DBQuery;
-    void TableUpdate();
+
+    void ErrorAct();
 public:
     MainClass();
 public slots:
+    void TableUpdate();
     void DeAddMenuSlot();
     void DeAddAct();
     void OfAddAct();

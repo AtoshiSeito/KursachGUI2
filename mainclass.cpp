@@ -2,6 +2,10 @@
 
 void MainClass::Header()
 {
+    ErrorloV->addWidget(new QLabel("Ошибка"));
+    ErrorloH->addLayout(ErrorloV);
+    Error->setLayout(ErrorloH);
+
     docCB = new QComboBox();
     aedCB = new QComboBox();
     docCB->addItem("Подразделения");
@@ -156,6 +160,11 @@ void MainClass::MainLayout()
     ml->addLayout(seclo, 1);
 }
 
+void MainClass::ErrorAct()
+{
+    Error->show();
+}
+
 void MainClass::TableUpdate()
 {
     int i=0;
@@ -243,6 +252,7 @@ MainClass::MainClass()
     QObject::connect(ecancelPB, SIGNAL(clicked(bool)), this, SLOT(CancelAct()));
     QObject::connect(editPB, SIGNAL(clicked(bool)), this, SLOT(EditAct()));
     QObject::connect(deletePB, SIGNAL(clicked(bool)), this, SLOT(DeleteAct()));
+    QObject::connect(console, SIGNAL(finished(int)), this, SLOT(TableUpdate()));
     msl->setCurrentIndex(msl->indexOf(DeAddW));
     mw->setLayout(ml);
     mw->setMinimumWidth(800);
@@ -273,8 +283,7 @@ void MainClass::DeAddMenuSlot()
 void MainClass::DeAddAct()
 {
     QString id = didle->text();
-    std::system(QString("C:/Qt/Projects/Kursach/debug/Kursach.exe division add %1").arg(id).toLocal8Bit());
-    TableUpdate();
+    if(id!="") console->start(program, QStringList() << "division" << "add" << id);
 }
 
 void MainClass::OfAddAct()
@@ -284,10 +293,16 @@ void MainClass::OfAddAct()
     QString fn = ofnle->text();
     QString tn = otnle->text();
     QString iddiv = oidivle->text();
-    if(iddiv != ""){
-        std::system(QString("C:/Qt/Projects/Kursach/debug/Kursach.exe oficer add %1 %2 %3 %4 %5").arg(id).arg(sn).arg(fn).arg(tn).arg(iddiv).toLocal8Bit());
+    if(iddiv != "" && id != "" && sn != "" && fn != "" && tn != ""){
+        QStringList List;
+        List << "oficer" << "add" << id << sn << fn << tn << iddiv;
+        console->start(program, List);
+    } else if (id != "" && sn != "" && fn != "" && tn != ""){
+        QStringList List;
+        List << "oficer" << "add" << id << sn << fn << tn;
+        console->start(program, List);
     } else {
-        std::system(QString("C:/Qt/Projects/Kursach/debug/Kursach.exe oficer add %1 %2 %3 %4").arg(id).arg(sn).arg(fn).arg(tn).toLocal8Bit());
+        ErrorAct();
     }
     TableUpdate();
 }
@@ -299,87 +314,92 @@ void MainClass::CaAddAct()
     QString fn = cfnle->text();
     QString tn = ctnle->text();
     QString iddiv = cidivle->text();
-    std::system(QString("C:/Qt/Projects/Kursach/debug/Kursach.exe cadet add %1 %2 %3 %4 %5").arg(id).arg(sn).arg(fn).arg(tn).arg(iddiv).toLocal8Bit());
+    QStringList List;
+    List << "cadet" << "add" << id << sn << fn << tn << iddiv;
+    if(iddiv != "" && id != "" && sn != "" && fn != "" && tn != "") console->start(program, List);
+    else ErrorAct();
     TableUpdate();
 }
 
 void MainClass::ChooseAct()
 {
     choosedId = eidele->text();
-    if(docCB->currentIndex() == 0){
-        SEditW = new QWidget();
-        old = new QBoxLayout(QBoxLayout::TopToBottom);
-        edidlo = new QBoxLayout(QBoxLayout::TopToBottom);
-        edidlo->addWidget(edidl);
-        edidlo->addWidget(edidle);
-        edidlo->setSpacing(0);
+    if(choosedId!=""){
+        if(docCB->currentIndex() == 0){
+            SEditW = new QWidget();
+            old = new QBoxLayout(QBoxLayout::TopToBottom);
+            edidlo = new QBoxLayout(QBoxLayout::TopToBottom);
+            edidlo->addWidget(edidl);
+            edidlo->addWidget(edidle);
+            edidlo->setSpacing(0);
 
-        edidolo = new QBoxLayout(QBoxLayout::TopToBottom);
-        edidolo->addWidget(edidol);
-        edidolo->addWidget(edidole);
-        edidolo->setSpacing(0);
+            edidolo = new QBoxLayout(QBoxLayout::TopToBottom);
+            edidolo->addWidget(edidol);
+            edidolo->addWidget(edidole);
+            edidolo->setSpacing(0);
 
-        old->addLayout(edidlo);
-        old->addStretch(1);
-        old->addLayout(edidolo);
-        old->addStretch(1);
-        old->addLayout(epblo);
+            epblo = new QBoxLayout(QBoxLayout::TopToBottom);
+            epblo->addWidget(editPB);
+            epblo->addWidget(ecancelPB);
+            epblo->addStretch(1);
 
-        epblo = new QBoxLayout(QBoxLayout::TopToBottom);
-        epblo->addWidget(editPB);
-        epblo->addWidget(ecancelPB);
-        epblo->addStretch(1);
+            old->addLayout(edidlo);
+            old->addStretch(1);
+            old->addLayout(edidolo);
+            old->addStretch(1);
+            old->addLayout(epblo);
 
-        SEditW->setLayout(old);
-        msl->addWidget(SEditW);
-    } else if(docCB->currentIndex() == 1 || docCB->currentIndex() == 2){
-        SEditW = new QWidget();
-        old = new QBoxLayout(QBoxLayout::TopToBottom);
-        edidlo = new QBoxLayout(QBoxLayout::TopToBottom);
-        edidlo->addWidget(edidl);
-        edidlo->addWidget(edidle);
-        edidlo->setSpacing(0);
+            SEditW->setLayout(old);
+            msl->addWidget(SEditW);
+        } else if(docCB->currentIndex() == 1 || docCB->currentIndex() == 2){
+            SEditW = new QWidget();
+            old = new QBoxLayout(QBoxLayout::TopToBottom);
+            edidlo = new QBoxLayout(QBoxLayout::TopToBottom);
+            edidlo->addWidget(edidl);
+            edidlo->addWidget(edidle);
+            edidlo->setSpacing(0);
 
-        esnlo = new QBoxLayout(QBoxLayout::TopToBottom);
-        esnlo->addWidget(esnl);
-        esnlo->addWidget(esnle);
-        esnlo->setSpacing(0);
+            esnlo = new QBoxLayout(QBoxLayout::TopToBottom);
+            esnlo->addWidget(esnl);
+            esnlo->addWidget(esnle);
+            esnlo->setSpacing(0);
 
-        efnlo = new QBoxLayout(QBoxLayout::TopToBottom);
-        efnlo->addWidget(efnl);
-        efnlo->addWidget(efnle);
-        efnlo->setSpacing(0);
+            efnlo = new QBoxLayout(QBoxLayout::TopToBottom);
+            efnlo->addWidget(efnl);
+            efnlo->addWidget(efnle);
+            efnlo->setSpacing(0);
 
-        etnlo = new QBoxLayout(QBoxLayout::TopToBottom);
-        etnlo->addWidget(etnl);
-        etnlo->addWidget(etnle);
-        etnlo->setSpacing(0);
+            etnlo = new QBoxLayout(QBoxLayout::TopToBottom);
+            etnlo->addWidget(etnl);
+            etnlo->addWidget(etnle);
+            etnlo->setSpacing(0);
 
-        eidivlo = new QBoxLayout(QBoxLayout::TopToBottom);
-        eidivlo->addWidget(eidivl);
-        eidivlo->addWidget(eidivle);
-        eidivlo->setSpacing(0);
+            eidivlo = new QBoxLayout(QBoxLayout::TopToBottom);
+            eidivlo->addWidget(eidivl);
+            eidivlo->addWidget(eidivle);
+            eidivlo->setSpacing(0);
 
-        epblo = new QBoxLayout(QBoxLayout::TopToBottom);
-        epblo->addWidget(editPB);
-        epblo->addWidget(ecancelPB);
-        epblo->addStretch(1);
+            epblo = new QBoxLayout(QBoxLayout::TopToBottom);
+            epblo->addWidget(editPB);
+            epblo->addWidget(ecancelPB);
+            epblo->addStretch(1);
 
-        old->addLayout(edidlo);
-        old->addStretch(1);
-        old->addLayout(esnlo);
-        old->addStretch(1);
-        old->addLayout(efnlo);
-        old->addStretch(1);
-        old->addLayout(etnlo);
-        old->addStretch(1);
-        old->addLayout(eidivlo);
-        old->addStretch(1);
-        old->addLayout(epblo);
-        SEditW->setLayout(old);
-        msl->addWidget(SEditW);
+            old->addLayout(edidlo);
+            old->addStretch(1);
+            old->addLayout(esnlo);
+            old->addStretch(1);
+            old->addLayout(efnlo);
+            old->addStretch(1);
+            old->addLayout(etnlo);
+            old->addStretch(1);
+            old->addLayout(eidivlo);
+            old->addStretch(1);
+            old->addLayout(epblo);
+            SEditW->setLayout(old);
+            msl->addWidget(SEditW);
+        }
+        msl->setCurrentIndex(msl->indexOf(SEditW));
     }
-    msl->setCurrentIndex(msl->indexOf(SEditW));
 }
 
 void MainClass::CancelAct()
@@ -394,56 +414,80 @@ void MainClass::EditAct()
     if(docCB->currentIndex() == 0){
         tmp = edidle->text();
         if(tmp != ""){
-            std::system(QString("C:/Qt/Projects/Kursach/debug/Kursach.exe division edit %1 id %2").arg(choosedId).arg(tmp).toLocal8Bit());
+            QStringList List;
+            List << "division" << "edit" << choosedId << "id" << tmp;
+            console->start(program, List);
             choosedId = tmp;
         }
         tmp = edidole->text();
         if(tmp != ""){
-            std::system(QString("C:/Qt/Projects/Kursach/debug/Kursach.exe division edit %1 idOf %2").arg(choosedId).arg(tmp).toLocal8Bit());
+            QStringList List;
+            List << "division" << "edit" << choosedId << "idOf" << tmp;
+            console->start(program, List);
         }
     } else if(docCB->currentIndex() == 1){
         tmp = edidle->text();
         if(tmp != ""){
-            std::system(QString("C:/Qt/Projects/Kursach/debug/Kursach.exe oficer edit %1 id %2").arg(choosedId).arg(tmp).toLocal8Bit());
+            QStringList List;
+            List << "oficer" << "edit" << choosedId << "id" << tmp;
+            console->start(program, List);
             choosedId = tmp;
         }
         tmp = esnle->text();
         if(tmp != ""){
-            std::system(QString("C:/Qt/Projects/Kursach/debug/Kursach.exe oficer edit %1 secondName %2").arg(choosedId).arg(tmp).toLocal8Bit());
+            QStringList List;
+            List << "oficer" << "edit" << choosedId << "secondName" << tmp;
+            console->start(program, List);
         }
         tmp = efnle->text();
         if(tmp != ""){
-            std::system(QString("C:/Qt/Projects/Kursach/debug/Kursach.exe oficer edit %1 firstName %2").arg(choosedId).arg(tmp).toLocal8Bit());
+            QStringList List;
+            List << "oficer" << "edit" << choosedId << "firstName" << tmp;
+            console->start(program, List);
         }
         tmp = etnle->text();
         if(tmp != ""){
-            std::system(QString("C:/Qt/Projects/Kursach/debug/Kursach.exe oficer edit %1 thirdName %2").arg(choosedId).arg(tmp).toLocal8Bit());
+            QStringList List;
+            List << "oficer" << "edit" << choosedId << "thirdName" << tmp;
+            console->start(program, List);
         }
         tmp = eidivle->text();
         if(tmp != ""){
-            std::system(QString("C:/Qt/Projects/Kursach/debug/Kursach.exe oficer edit %1 idDiv %2").arg(choosedId).arg(tmp).toLocal8Bit());
+            QStringList List;
+            List << "oficer" << "edit" << choosedId << "idDiv" << tmp;
+            console->start(program, List);
         }
     } else if(docCB->currentIndex() == 2){
         tmp = edidle->text();
         if(tmp != ""){
-            std::system(QString("C:/Qt/Projects/Kursach/debug/Kursach.exe cadet edit %1 id %2").arg(choosedId).arg(tmp).toLocal8Bit());
+            QStringList List;
+            List << "cadet" << "edit" << choosedId << "id" << tmp;
+            console->start(program, List);
             choosedId = tmp;
         }
         tmp = esnle->text();
         if(tmp != ""){
-            std::system(QString("C:/Qt/Projects/Kursach/debug/Kursach.exe cadet edit %1 secondName %2").arg(choosedId).arg(tmp).toLocal8Bit());
+            QStringList List;
+            List << "cadet" << "edit" << choosedId << "secondName" << tmp;
+            console->start(program, List);
         }
         tmp = efnle->text();
         if(tmp != ""){
-            std::system(QString("C:/Qt/Projects/Kursach/debug/Kursach.exe cadet edit %1 firstName %2").arg(choosedId).arg(tmp).toLocal8Bit());
+            QStringList List;
+            List << "cadet" << "edit" << choosedId << "firstName" << tmp;
+            console->start(program, List);
         }
         tmp = etnle->text();
         if(tmp != ""){
-            std::system(QString("C:/Qt/Projects/Kursach/debug/Kursach.exe cadet edit %1 thirdName %2").arg(choosedId).arg(tmp).toLocal8Bit());
+            QStringList List;
+            List << "cadet" << "edit" << choosedId << "thirdName" << tmp;
+            console->start(program, List);
         }
         tmp = eidivle->text();
         if(tmp != ""){
-            std::system(QString("C:/Qt/Projects/Kursach/debug/Kursach.exe cadet edit %1 idDiv %2").arg(choosedId).arg(tmp).toLocal8Bit());
+            QStringList List;
+            List << "cadet" << "edit" << choosedId << "idDiv" << tmp;
+            console->start(program, List);
         }
     }
     TableUpdate();
@@ -455,11 +499,17 @@ void MainClass::DeleteAct()
     int block = docCB->currentIndex();
     QString id = didele->text();
     if(block == 0){
-        std::system(QString("C:/Qt/Projects/Kursach/debug/Kursach.exe division delete %1").arg(id).toLocal8Bit());
+        QStringList List;
+        List << "division" << "delete" << id;
+        console->start(program, List);
     } else if(block == 1){
-        std::system(QString("C:/Qt/Projects/Kursach/debug/Kursach.exe oficer delete %1").arg(id).toLocal8Bit());
+        QStringList List;
+        List << "oficer" << "delete" << id;
+        console->start(program, List);
     } else if(block == 2){
-        std::system(QString("C:/Qt/Projects/Kursach/debug/Kursach.exe cadet delete %1").arg(id).toLocal8Bit());
+        QStringList List;
+        List << "cadet" << "delete" << id;
+        console->start(program, List);
     }
     TableUpdate();
 }
