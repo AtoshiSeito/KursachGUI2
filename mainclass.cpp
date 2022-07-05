@@ -250,8 +250,11 @@ MainClass::MainClass()
     QObject::connect(CaAddPB, SIGNAL(clicked(bool)), this, SLOT(CaAddAct()));
     QObject::connect(echoosePB, SIGNAL(clicked(bool)), this, SLOT(ChooseAct()));
     QObject::connect(ecancelPB, SIGNAL(clicked(bool)), this, SLOT(CancelAct()));
+    QObject::connect(ecancelPB, SIGNAL(clicked(bool)), this, SLOT(TableUpdate()));
     QObject::connect(editPB, SIGNAL(clicked(bool)), this, SLOT(EditAct()));
+    QObject::connect(editPB, SIGNAL(clicked(bool)), this, SLOT(TableUpdate()));
     QObject::connect(deletePB, SIGNAL(clicked(bool)), this, SLOT(DeleteAct()));
+    QObject::connect(deletePB, SIGNAL(clicked(bool)), this, SLOT(TableUpdate()));
     QObject::connect(console, SIGNAL(finished(int)), this, SLOT(TableUpdate()));
     msl->setCurrentIndex(msl->indexOf(DeAddW));
     mw->setLayout(ml);
@@ -418,12 +421,14 @@ void MainClass::EditAct()
             List << "division" << "edit" << choosedId << "id" << tmp;
             console->start(program, List);
             choosedId = tmp;
+            while(console->waitForFinished());
         }
         tmp = edidole->text();
         if(tmp != ""){
             QStringList List;
             List << "division" << "edit" << choosedId << "idOf" << tmp;
             console->start(program, List);
+            while(console->waitForFinished());
         }
     } else if(docCB->currentIndex() == 1){
         tmp = edidle->text();
@@ -431,6 +436,7 @@ void MainClass::EditAct()
             QStringList List;
             List << "oficer" << "edit" << choosedId << "id" << tmp;
             console->start(program, List);
+            while(console->waitForFinished());
             choosedId = tmp;
         }
         tmp = esnle->text();
@@ -438,24 +444,28 @@ void MainClass::EditAct()
             QStringList List;
             List << "oficer" << "edit" << choosedId << "secondName" << tmp;
             console->start(program, List);
+            while(console->waitForFinished());
         }
         tmp = efnle->text();
         if(tmp != ""){
             QStringList List;
             List << "oficer" << "edit" << choosedId << "firstName" << tmp;
             console->start(program, List);
+            while(console->waitForFinished());
         }
         tmp = etnle->text();
         if(tmp != ""){
             QStringList List;
             List << "oficer" << "edit" << choosedId << "thirdName" << tmp;
             console->start(program, List);
+            while(console->waitForFinished());
         }
         tmp = eidivle->text();
         if(tmp != ""){
             QStringList List;
             List << "oficer" << "edit" << choosedId << "idDiv" << tmp;
             console->start(program, List);
+            while(console->waitForFinished());
         }
     } else if(docCB->currentIndex() == 2){
         tmp = edidle->text();
@@ -463,6 +473,7 @@ void MainClass::EditAct()
             QStringList List;
             List << "cadet" << "edit" << choosedId << "id" << tmp;
             console->start(program, List);
+            while(console->waitForFinished());
             choosedId = tmp;
         }
         tmp = esnle->text();
@@ -470,24 +481,28 @@ void MainClass::EditAct()
             QStringList List;
             List << "cadet" << "edit" << choosedId << "secondName" << tmp;
             console->start(program, List);
+            while(console->waitForFinished());
         }
         tmp = efnle->text();
         if(tmp != ""){
             QStringList List;
             List << "cadet" << "edit" << choosedId << "firstName" << tmp;
             console->start(program, List);
+            while(console->waitForFinished());
         }
         tmp = etnle->text();
         if(tmp != ""){
             QStringList List;
             List << "cadet" << "edit" << choosedId << "thirdName" << tmp;
             console->start(program, List);
+            while(console->waitForFinished());
         }
         tmp = eidivle->text();
         if(tmp != ""){
             QStringList List;
             List << "cadet" << "edit" << choosedId << "idDiv" << tmp;
             console->start(program, List);
+            while(console->waitForFinished());
         }
     }
     TableUpdate();
